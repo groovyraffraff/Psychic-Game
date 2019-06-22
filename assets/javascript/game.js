@@ -1,59 +1,42 @@
-//Array of possible computer choices
-var computerChoices = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+var alphabet =  ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-
-//Variables for tracking players wins, losses, & guesses left
 var wins = 0;
 var losses = 0;
 var guessesLeft = 9;
-var lettersGuessed = [];
-var computerGuess = [];
+var lettersguessed = [];
+    var computerChoice = alphabet[Math.floor(Math.random() * alphabet.length)];
+    console.log(computerChoice);
 
+var userChoice =[];
 
-//Initial computer letter
-window.onload = function() {
-	var compGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-	computerGuess.push(compGuess);
-	console.log(computerGuess[0]);
-}
-
-
-//Game
 document.onkeyup = function(event) {
-	var playerGuess = event.key;
-	lettersGuessed.push(playerGuess);
-	console.log(computerGuess[0]);
+    var userChoice = event.key;
 
-if ((playerGuess === computerGuess[0]) && (guessesLeft > 0)) {
-	wins++;
-	guessesLeft = 9;
-	lettersGuessed.length = 0;
-	computerGuess.length = 0;
-	var compGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-	computerGuess.push(compGuess);
-	console.log(computerGuess[0]);
+if(userChoice === computerChoice) {
+    wins++;
+    guessesLeft = 9;
+    lettersguessed = [];
+    alert("You Got it! Nice. How about another round?");
+     computerChoice = alphabet[Math.floor(Math.random() * alphabet.length)];
+     console.log(computerChoice);
+
+}else {
+    guessesLeft--;
+    lettersguessed.push(userChoice);
 }
 
-else if ((playerGuess !== computerGuess[0]) && (guessesLeft > 0)) {
-	guessesLeft = guessesLeft-1;
-}
+if(guessesLeft === 0) {
+    losses++;
+    guessesLeft = 9;
+    lettersguessed = [];
+     alert("Better luck next time!");
 
-else {
-	losses++;
-	guessesLeft = 9;
-	lettersGuessed.length = 0;
-	computerGuess.length = 0;
-	var compGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
-	computerGuess.push(compGuess);
-	console.log(computerGuess[0]);
-}
+     computerChoice = alphabet[Math.floor(Math.random() * alphabet.length)];
+     console.log(computerChoice)};
 
-var html = "<p>Guess what letter I'm thinking of!</p>" +
-          "<p>Wins: " + wins + "</p>" +
-          "<p>Losses: " + losses + "</p>" +
-          "<p>Guesses left: " + guessesLeft + "</p>" +
-          "<p>Your guesses so far: " + lettersGuessed + "</p>";
- 
-document.querySelector("#game").innerHTML = html;
 
+document.getElementById("wins").innerHTML = "Wins: " + wins;
+document.getElementById("losses").innerHTML = "Losses: " + losses;
+document.getElementById("guesses_left").innerHTML = "Guesses Left: " + guessesLeft;
+document.getElementById("guesses_so_far").innerHTML = "Guesses So Far: " + lettersguessed;
 }
